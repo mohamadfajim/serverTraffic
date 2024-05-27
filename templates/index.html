@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server Traffic Monitor</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .card {
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="text-center">
+            <img src="/static/assets/logo.png" alt="Logo" class="img-fluid" style="max-width: 150px;">
+            <h1>Server Traffic Monitor</h1>
+            <p>Name: {{ name }}</p>
+            <p>Phone: {{ phone }}</p>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                Traffic Usage of {{ ip }}
+                <br>
+                Max traffic: {{ max_traffic }} GB
+                <br>
+                Your traffic: {{ usage_traffic }} GB from {{ max_traffic }} GB
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Uploaded: {{ transmitted }} GB</h5>
+                <h5 class="card-title">Downloaded: {{ received }} GB</h5>
+                <h5 class="card-title">Total Traffic: {{ total }} GB</h5>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

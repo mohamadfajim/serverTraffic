@@ -1,6 +1,4 @@
-Sure, here's a beautiful and detailed README for your Flask application repository on GitHub:
 
----
 
 # Flask Application Setup and Installation Script
 
