@@ -8,8 +8,8 @@ fi
 
 # Variables
 APP_DIR="/opt/flask_app"
-REPO_URL="https://github.com/yourusername/yourflaskapp.git"
-PYTHON_VERSION="3.8"
+REPO_URL="https://github.com/diyakou/serverTraffic/archive/refs/heads/main.zip"
+PYTHON_VERSION="3"
 SERVICE_FILE="/etc/systemd/system/flask_app.service"
 
 # Prompt the user for environment variables
@@ -21,10 +21,10 @@ read -p "Enter the traffic limit: " TRAFFIC
 # Update package list and install dependencies
 if [ -x "$(command -v apt)" ]; then
   apt update
-  apt install -y python$PYTHON_VERSION python$PYTHON_VERSION-venv git nginx
+  apt install -y python3 python3-venv unzip nginx python-is-python3
 elif [ -x "$(command -v yum)" ]; then
   yum update -y
-  yum install -y python$PYTHON_VERSION python$PYTHON_VERSION-venv git nginx
+  yum install -y python3 python3-venv unzip nginx
 else
   echo "Unsupported package manager. Please install dependencies manually."
   exit 1
@@ -34,11 +34,14 @@ fi
 mkdir -p $APP_DIR
 cd $APP_DIR
 
-# Clone the repository
-git clone $REPO_URL .
+# Download and unzip the repository
+wget $REPO_URL -O main.zip
+unzip main.zip
+mv serverTraffic-main/* .
+rm -rf serverTraffic-main main.zip
 
 # Set up virtual environment
-python$PYTHON_VERSION -m venv venv
+python${PYTHON_VERSION} -m venv venv
 source venv/bin/activate
 
 # Install Python packages
