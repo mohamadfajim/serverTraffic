@@ -8,7 +8,7 @@ fi
 
 # Variables
 APP_DIR="/opt/flask_app"
-REPO_URL="https://github.com/diyakou/serverTraffic/archive/refs/heads/main.zip"
+REPO_URL="https://github.com/diyakou/serverTraffic.git"  # Adjusted to use Git directly
 PYTHON_VERSION="3"
 SERVICE_FILE="/etc/systemd/system/flask_app.service"
 
@@ -21,10 +21,10 @@ read -p "Enter the traffic limit: " TRAFFIC
 # Update package list and install dependencies
 if [ -x "$(command -v apt)" ]; then
   apt update
-  apt install -y python3 python3-venv unzip nginx python-is-python3
+  apt install -y python3 python3-venv git nginx python-is-python3
 elif [ -x "$(command -v yum)" ]; then
   yum update -y
-  yum install -y python3 python3-venv unzip nginx
+  yum install -y python3 python3-venv git nginx
 else
   echo "Unsupported package manager. Please install dependencies manually."
   exit 1
@@ -34,11 +34,8 @@ fi
 mkdir -p $APP_DIR
 cd $APP_DIR
 
-# Download and unzip the repository
-wget $REPO_URL -O main.zip
-unzip main.zip
-mv serverTraffic-main/* .
-rm -rf serverTraffic-main main.zip
+# Clone the repository
+git clone $REPO_URL .
 
 # Set up virtual environment
 python${PYTHON_VERSION} -m venv venv
@@ -97,8 +94,8 @@ EOF
 # Enable the Nginx site configuration
 ln -s /etc/nginx/sites-available/flask_app /etc/nginx/sites-enabled
 
-# Remove default Nginx site configuration
-rm /etc/nginx/sites-enabled/default
+# Remove default Nginx site configuration if it exists
+[ -e /etc/nginx/sites-enabled/default ] && rm /etc/nginx/sites-enabled/default
 
 # Restart Nginx
 systemctl restart nginx
