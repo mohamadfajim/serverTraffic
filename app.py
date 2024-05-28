@@ -55,7 +55,7 @@ def index():
     total_traffic_gb = total_received_gb + total_transmitted_gb
     remaining_traffic_gb = max_traffic_gb - total_traffic_gb
 
-    return render_template('index.html', usage_traffic=remaining_traffic_gb, max_traffic=max_traffic_gb, ip=ip,
+    return render_template('index.html', ip=ip,
                            received=total_received_gb, transmitted=total_transmitted_gb,
                            total=total_traffic_gb, name=username, phone=phone)
 
