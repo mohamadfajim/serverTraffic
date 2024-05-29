@@ -2,6 +2,9 @@ from flask import Flask, render_template
 import os
 import json
 import psutil
+from dotenv import load_dotenv
+
+load_dotenv()  # Load environment variables from .env file
 
 app = Flask(__name__, static_folder='templates/static')
 data_file = 'traffic_data.json'
