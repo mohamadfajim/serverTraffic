@@ -2,7 +2,7 @@ from flask import Flask, render_template
 import os
 import json
 import psutil
-
+#v2
 app = Flask(__name__ , static_folder='templates/static')
 data_file = 'traffic_data.json'
 
