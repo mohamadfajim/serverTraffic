@@ -54,7 +54,7 @@ source venv/bin/activate || { echo "Failed to activate virtual environment"; exi
 
 # Install Python packages
 pip install -r requirements.txt || { echo "Failed to install Python packages"; exit 1; }
-
+pip install gunicorn
 # Create .env file with environment variables
 cat <<EOF > $APP_DIR/.env
 NAME=$NAME
