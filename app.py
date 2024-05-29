@@ -50,8 +50,8 @@ def index():
     # Save updated data
     save_data(data)
 
-    total_received_gb = data['received'] / (1024 ** 2)
-    total_transmitted_gb = data['transmitted'] / (1024 ** 2)
+    total_received_gb = data['received'] / (1024 ** 3)
+    total_transmitted_gb = data['transmitted'] / (1024 ** 3)
     total_traffic_gb = total_received_gb + total_transmitted_gb
     remaining_traffic_gb = max_traffic_gb - total_traffic_gb
 
