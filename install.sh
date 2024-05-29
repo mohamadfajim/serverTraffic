@@ -20,6 +20,14 @@ read -p "Enter your name: " NAME
 read -p "Enter your phone number: " PHONE
 read -p "Enter the server IP address: " IP
 read -p "Enter the traffic limit: " TRAFFIC
+read -p "Enter the network interface to monitor (e.g., eth0, default: eth0): " INTERFACE
+
+# Set default values if no input was provided
+IP=${IP:-192.168.1.1}
+PHONE=${PHONE:-123-456-7890}
+TRAFFIC=${TRAFFIC:-100}
+NAME=${NAME:-John Doe}
+INTERFACE=${INTERFACE:-eth0}
 
 # Update package list and install dependencies
 if [ -x "$(command -v apt)" ]; then
@@ -53,11 +61,40 @@ NAME=$NAME
 PHONE=$PHONE
 IP=$IP
 TRAFFIC=$TRAFFIC
+INTERFACE=$INTERFACE
 EOF
 
 # Ensure the log directory exists and set permissions
 mkdir -p $LOG_DIR || { echo "Failed to create log directory"; exit 1; }
 chown www-data:www-data $LOG_DIR || { echo "Failed to set permissions on log directory"; exit 1; }
+
+# Initialize traffic data file with current network usage
+python <<EOF
+import psutil
+import json
+
+interface = "$INTERFACE"
+net_io = psutil.net_io_counters(pernic=True)
+
+if interface in net_io:
+    stats = net_io[interface]
+    initial_data = {
+        "received": 0,
+        "transmitted": 0,
+        "prev_received": stats.bytes_recv,
+        "prev_transmitted": stats.bytes_sent
+    }
+else:
+    initial_data = {
+        "received": 0,
+        "transmitted": 0,
+        "prev_received": 0,
+        "prev_transmitted": 0
+    }
+
+with open('$APP_DIR/traffic_data.json', 'w') as f:
+    json.dump(initial_data, f)
+EOF
 
 # Create systemd service
 cat <<EOF > $SERVICE_FILE
