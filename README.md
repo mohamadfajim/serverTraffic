@@ -3,7 +3,11 @@
 git clone https://github.com/mohamadfajim/serverTraffic
 
 ````
+
+````
 cd serverTraffic
+
+````
 
 ````
 apt update && apt install python3 python3-pip python-is-python3
