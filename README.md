@@ -44,3 +44,16 @@ nohup gunicorn --bind 0.0.0.0:8000 wsgi:app &
 
 ````
 
+
+
+تنظیم کردن خودکار دستور بعد ریتسارت سرور
+
+
+````
+sudo crontab -e
+
+````
+````
+@reboot . cd serverTraffic / nohup gunicorn --bind 0.0.0.0:8000 wsgi:app &
+
+````
